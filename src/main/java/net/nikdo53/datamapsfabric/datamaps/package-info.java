@@ -5,8 +5,10 @@
 
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NonnullDefault
 package net.nikdo53.datamapsfabric.datamaps;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import org.jetbrains.annotations.NonNls;
+import org.lwjgl.system.NonnullDefault;

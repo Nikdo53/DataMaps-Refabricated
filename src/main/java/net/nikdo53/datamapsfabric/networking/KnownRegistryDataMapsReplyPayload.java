@@ -7,8 +7,9 @@ package net.nikdo53.datamapsfabric.networking;
 
 import com.google.common.collect.Maps;
 import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.mixin.networking.accessor.ServerCommonNetworkHandlerAccessor;
 import net.minecraft.core.Registry;
+import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -42,7 +43,9 @@ public record KnownRegistryDataMapsReplyPayload(
 
     @ApiStatus.Internal
     public void handle(ServerConfigurationNetworking.Context context) {
-        context.channelHandlerContext().attr(DataMapsManager.ATTRIBUTE_KNOWN_DATA_MAPS).set(this.dataMaps());
-        context.finishCurrentTask(RegistryDataMapNegotiation.TYPE);
+        ServerConfigurationPacketListenerImpl handler = context.networkHandler();
+        ((ServerCommonNetworkHandlerAccessor) handler).getConnection().channel
+                .attr(DataMapsManager.ATTRIBUTE_KNOWN_DATA_MAPS).set(this.dataMaps());
+        handler.finishCurrentTask(RegistryDataMapNegotiation.TYPE);
     }
 }

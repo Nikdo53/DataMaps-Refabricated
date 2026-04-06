@@ -3,20 +3,22 @@
 	"id": "datamaps-refabricated",
 	"version": "${version}",
 	"name": "DataMaps Refabricated",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A port of Neoforges DataMaps to Fabric.",
 	"authors": [
-		"Me!"
+		"Nikdo53"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "LGPL v2.1",
 	"icon": "assets/datamaps-refabricated/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
 			"net.nikdo53.datamapsfabric.DataMapsRefabricated"
+		],
+		"fabric-datagen": [
+			"net.nikdo53.datamapsfabric.test.TestDataGen"
 		]
 	},
 	"mixins": [

@@ -26,6 +26,12 @@ loom {
 	accessWidenerPath = file("src/main/resources/datamaps-refabricated.classtweaker")
 }
 
+fabricApi {
+	configureDataGeneration() {
+		client = true
+	}
+}
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"

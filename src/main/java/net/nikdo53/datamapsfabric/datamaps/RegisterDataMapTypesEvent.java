@@ -7,6 +7,7 @@ package net.nikdo53.datamapsfabric.datamaps;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
+import net.fabricmc.fabric.impl.registry.sync.DynamicRegistriesImpl;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
@@ -46,7 +47,8 @@ public class RegisterDataMapTypesEvent  {
      */
     public <T, R> void register(DataMapType<R, T> type) {
         final var registry = type.registryKey();
-        if (RegistryDataLoader.SYNCHRONIZED_REGISTRIES.stream().noneMatch(data -> data.key().equals(registry))) {
+        if (DynamicRegistriesImpl.DYNAMIC_REGISTRY_KEYS.stream().anyMatch(resourceKey -> resourceKey.equals(registry)) &&
+                RegistryDataLoader.SYNCHRONIZED_REGISTRIES.stream().noneMatch(data -> data.key().equals(registry))) {
             throw new UnsupportedOperationException("Cannot register synced data map " + type.id() + " for datapack registry " + registry.location() + " that is not synced!");
         }
 

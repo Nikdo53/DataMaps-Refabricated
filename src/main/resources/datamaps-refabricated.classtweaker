@@ -6,5 +6,8 @@ transitive-inject-interface net/minecraft/core/MappedRegistry net/nikdo53/datama
 transitive-inject-interface net/minecraft/core/Registry net/nikdo53/datamapsfabric/extensions/IRegistryDataMapExtension<TT;>
 
 accessible field net/minecraft/network/Connection channel Lio/netty/channel/Channel;
+accessible method net/minecraft/server/network/ServerConfigurationPacketListenerImpl finishCurrentTask (Lnet/minecraft/server/network/ConfigurationTask$Type;)V
+accessible class net/minecraft/resources/RegistryOps$HolderLookupAdapter
+accessible method net/minecraft/resources/RegistryOps <init> (Lcom/mojang/serialization/DynamicOps;Lnet/minecraft/resources/RegistryOps$RegistryInfoLookup;)V
 
 

@@ -13,7 +13,7 @@ import java.util.Optional;
 public class ConditionalOps<T> extends RegistryOps<T> {
     private final HolderLookup.Provider context;
     public ConditionalOps(RegistryOps<T> ops, HolderLookup.Provider context) {
-        super(ops, context);
+        super(ops, new RegistryOps.HolderLookupAdapter(context));
         this.context = context;
     }
 

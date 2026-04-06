@@ -1,6 +1,7 @@
 package net.nikdo53.datamapsfabric.event;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.mixin.networking.accessor.ServerCommonNetworkHandlerAccessor;
 import net.minecraft.core.MappedRegistry;
@@ -10,8 +11,16 @@ import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
+import net.nikdo53.datamapsfabric.datamaps.RegisterDataMapTypesEvent;
 import net.nikdo53.datamapsfabric.networking.RegistryDataMapSyncPayload;
+import net.nikdo53.datamapsfabric.test.TestDataMaps;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +32,17 @@ import java.util.Map;
 public class FabricEvents {
     public static void register(){
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(FabricEvents::onDatapackSync);
+        UseBlockCallback.EVENT.register(FabricEvents::onUseBlock);
+        RegisterDataMapTypesEvent.EVENT.register(FabricEvents::onRegisterDataMapTypes);
+
+    }
+
+    private static void onRegisterDataMapTypes(RegisterDataMapTypesEvent event) {
+        event.register(TestDataMaps.TEST_DATA_MAP);
+    }
+
+    private static InteractionResult onUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        return InteractionResult.PASS;
     }
 
     private static void onDatapackSync(ServerPlayer serverPlayer, boolean joined) {
@@ -59,6 +79,8 @@ public class FabricEvents {
             ServerPlayNetworking.send(player, new RegistryDataMapSyncPayload<>(registry.key(), att));
         }
     }
+
+
 
 
 }
