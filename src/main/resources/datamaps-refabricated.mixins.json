@@ -1,0 +1,19 @@
+{
+	"required": true,
+	"package": "net.nikdo53.datamapsfabric.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"AddReloadableServerResourceMixin",
+		"HolderMixin",
+		"HolderReferenceMixin",
+		"MappedRegistryMixin",
+		"RegistryLookupMixin",
+		"RegistryMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
