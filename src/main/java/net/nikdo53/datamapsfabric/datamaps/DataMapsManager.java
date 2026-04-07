@@ -4,6 +4,7 @@ import io.netty.util.AttributeKey;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.nikdo53.datamapsfabric.DataMapsRefabricated;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -34,6 +35,6 @@ public class DataMapsManager {
         dataMaps = Collections.unmodifiableMap(dataMapTypes);
     }
 
-    public static final AttributeKey<Map<ResourceKey<? extends Registry<?>>, Collection<ResourceLocation>>> ATTRIBUTE_KNOWN_DATA_MAPS = AttributeKey.valueOf("neoforge:known_data_maps");
+    public static final AttributeKey<Map<ResourceKey<? extends Registry<?>>, Collection<ResourceLocation>>> ATTRIBUTE_KNOWN_DATA_MAPS = AttributeKey.valueOf(DataMapsRefabricated.loc("known_data_maps").toString());
 
 }

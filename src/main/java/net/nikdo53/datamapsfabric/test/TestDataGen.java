@@ -34,7 +34,7 @@ public class TestDataGen implements DataGeneratorEntrypoint{
             var map = this.builder(TestDataMaps.TEST_DATA_MAP);
             map.add(ItemTags.AXES, "an axe", false);
             map.add(Items.LAPIS_LAZULI.builtInRegistryHolder(), "lapiuz lazul", false, ResourceConditions.allModsLoaded("some_mod_yeah"));
-            map.add(Items.WOODEN_SWORD.builtInRegistryHolder(), "NOT tung tung tung sahur 😡", false, ResourceConditions.not(ResourceConditions.anyModsLoaded("optifine", "some_other_mod")));
+            map.add(Items.WOODEN_SWORD.builtInRegistryHolder(), "NO triple t 😡", false, ResourceConditions.not(ResourceConditions.anyModsLoaded("optifine", "some_other_mod")));
 
 
         }

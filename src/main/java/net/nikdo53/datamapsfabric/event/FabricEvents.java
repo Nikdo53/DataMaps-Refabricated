@@ -63,6 +63,7 @@ public class FabricEvents {
         DataMapsManager.getDataMaps().forEach((registry, values) -> {
             final var regOpt = serverPlayer.getServer().overworld().registryAccess().registry(registry);
             if (regOpt.isEmpty()) return;
+            if (!ServerPlayNetworking.canSend(serverPlayer, RegistryDataMapSyncPayload.TYPE)) return;
 
             ServerCommonNetworkHandlerAccessor connection = (ServerCommonNetworkHandlerAccessor) serverPlayer.connection;
 

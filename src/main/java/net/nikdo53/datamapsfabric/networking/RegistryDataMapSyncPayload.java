@@ -113,7 +113,7 @@ public record RegistryDataMapSyncPayload<T>(ResourceKey<? extends Registry<T>> r
             DataMapsUpdatedEvent.EVENT.invoker().onDataMapsUpdated(new DataMapsUpdatedEvent(regAccess, registry, DataMapsUpdatedEvent.UpdateCause.CLIENT_SYNC));
         } catch (Throwable t) {
             DataMapsRefabricated.LOGGER.error("Failed to handle registry data map sync: ", t);
-            context.responseSender().disconnect(Component.literal("😔 failed to sync datamap: " + this.registryKey().location().toString() + " cuz " + t.toString()));
+            context.responseSender().disconnect(Component.translatable("neoforge.network.data_maps.failed", this.registryKey().location().toString(), t.toString()));
         }
     }
 }

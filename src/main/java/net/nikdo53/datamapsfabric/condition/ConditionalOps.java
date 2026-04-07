@@ -42,6 +42,7 @@ public class ConditionalOps {
      * </pre>
      */
     public static final String CONDITIONAL_VALUE_KEY = "neoforge:value";
+    public static final List<String> OTHER_CONDITIONS_KEYS = List.of("fabric:value", "forge:value");
 
     /**
      * @see #createConditionalCodec(Codec, String)
@@ -180,12 +181,9 @@ public class ConditionalOps {
             this.innerCodec = innerCodec;
         }
 
-        // Note: I am not too sure of what to return in the second element of the pair.
-        // If this turns out to be a problem, please change it but also document it and write some test cases.
         @Override
         public <T> DataResult<Pair<Optional<WithConditions<A>>, T>> decode(DynamicOps<T> ops, T input) {
             if (ops.compressMaps()) {
-                // Compressing ops are not supported at the moment because they require special handling.
                 return DataResult.error(() -> "Cannot use ConditionalCodec with compressing DynamicOps");
             }
 
@@ -210,6 +208,14 @@ public class ConditionalOps {
                         DataResult<Pair<A, T>> innerDecodeResult;
 
                         T valueDataCarrier = inputMap.get(CONDITIONAL_VALUE_KEY);
+                        if (valueDataCarrier == null){
+                            for (String key : OTHER_CONDITIONS_KEYS) {
+                                valueDataCarrier = inputMap.get(key);
+                                if (valueDataCarrier != null) {
+                                    break;
+                                }
+                            }
+                        }
                         if (valueDataCarrier != null) {
                             // If there is a value field use its contents to deserialize.
                             innerDecodeResult = innerCodec.decode(ops, valueDataCarrier);
