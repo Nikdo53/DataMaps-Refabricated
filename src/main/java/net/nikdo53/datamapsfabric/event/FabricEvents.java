@@ -2,15 +2,17 @@ package net.nikdo53.datamapsfabric.event;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.mixin.networking.accessor.ServerCommonNetworkHandlerAccessor;
-import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistrySynchronization;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -19,10 +21,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
 import net.nikdo53.datamapsfabric.datamaps.RegisterDataMapTypesEvent;
+import net.nikdo53.datamapsfabric.networking.RegistryDataMapNegotiation;
 import net.nikdo53.datamapsfabric.networking.RegistryDataMapSyncPayload;
 import net.nikdo53.datamapsfabric.test.TestDataMaps;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -32,16 +33,29 @@ import java.util.Map;
 public class FabricEvents {
     public static void register(){
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(FabricEvents::onDatapackSync);
-        UseBlockCallback.EVENT.register(FabricEvents::onUseBlock);
+       // UseBlockCallback.EVENT.register(FabricEvents::testOnUseBlock);
         RegisterDataMapTypesEvent.EVENT.register(FabricEvents::onRegisterDataMapTypes);
 
+        ServerConfigurationConnectionEvents.CONFIGURE.register(FabricEvents::onRegisterConfigurationTasks);
+
+    }
+
+    private static void onRegisterConfigurationTasks(ServerConfigurationPacketListenerImpl handler, MinecraftServer server) {
+        if (ServerConfigurationNetworking.canSend(handler, RegistryDataMapNegotiation.ID)) {
+            handler.addTask(new RegistryDataMapNegotiation(handler));
+        } else {
+            //i dunno 😔
+        }
     }
 
     private static void onRegisterDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(TestDataMaps.TEST_DATA_MAP);
     }
 
-    private static InteractionResult onUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    private static InteractionResult testOnUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        ItemStack stack = player.getItemInHand(interactionHand);
+        System.out.println(stack.getItemHolder().getData(TestDataMaps.TEST_DATA_MAP));
+
         return InteractionResult.PASS;
     }
 

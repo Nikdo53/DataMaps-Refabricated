@@ -19,6 +19,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.nikdo53.datamapsfabric.DataMapsRefabricated;
 import net.nikdo53.datamapsfabric.codecs.NeoForgeExtraCodecs;
 import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
 import org.jetbrains.annotations.ApiStatus;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 
 @ApiStatus.Internal
 public record KnownRegistryDataMapsPayload(Map<ResourceKey<? extends Registry<?>>, List<KnownDataMap>> dataMaps) implements CustomPacketPayload {
-    public static final Type<KnownRegistryDataMapsPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("neoforge", "known_registry_data_maps"));
+    public static final Type<KnownRegistryDataMapsPayload> TYPE = new Type<>(DataMapsRefabricated.loc("known_registry_data_maps"));
     public static final StreamCodec<FriendlyByteBuf, KnownRegistryDataMapsPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.map(
                     Maps::newHashMapWithExpectedSize,

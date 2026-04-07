@@ -2,6 +2,7 @@ package net.nikdo53.datamapsfabric.test;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
@@ -32,8 +33,8 @@ public class TestDataGen implements DataGeneratorEntrypoint{
 
             var map = this.builder(TestDataMaps.TEST_DATA_MAP);
             map.add(ItemTags.AXES, "an axe", false);
-            map.add(Items.LAPIS_LAZULI.builtInRegistryHolder(), "lapiuz lazul", false);
-            map.add(Items.WOODEN_SWORD.builtInRegistryHolder(), "tung tung tung sahur", false);
+            map.add(Items.LAPIS_LAZULI.builtInRegistryHolder(), "lapiuz lazul", false, ResourceConditions.allModsLoaded("some_mod_yeah"));
+            map.add(Items.WOODEN_SWORD.builtInRegistryHolder(), "NOT tung tung tung sahur 😡", false, ResourceConditions.not(ResourceConditions.anyModsLoaded("optifine", "some_other_mod")));
 
 
         }

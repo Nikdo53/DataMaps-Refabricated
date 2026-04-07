@@ -3,39 +3,34 @@ package net.nikdo53.datamapsfabric.condition;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.*;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.ExtraCodecs;
+import net.nikdo53.datamapsfabric.extensions.IConditionOpsExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ConditionalOps<T> extends RegistryOps<T> {
-    private final HolderLookup.Provider context;
-    public ConditionalOps(RegistryOps<T> ops, HolderLookup.Provider context) {
-        super(ops, new RegistryOps.HolderLookupAdapter(context));
-        this.context = context;
-    }
-
+public class ConditionalOps {
     /**
      * Returns a codec that can retrieve a {@link HolderLookup.Provider} from a registry ops,
-     * for example with {@code retrieveContext().decode(ops, ops.emptyMap())}.
+     * for example, with {@code retrieveContext().decode(ops, ops.emptyMap())}.
      */
     public static MapCodec<HolderLookup.Provider> retrieveContext() {
         return ExtraCodecs.retrieveContext(ops -> {
-            if (!(ops instanceof ConditionalOps<?> conditionalOps))
+            if (!(ops instanceof IConditionOpsExtension conditionalOps) || conditionalOps.getProvider() == null)
                 return DataResult.success(null);
 
-            return DataResult.success(conditionalOps.context);
+            return DataResult.success(conditionalOps.getProvider());
         });
     }
 
     /**
      * Key used for the conditions inside an object.
      */
-    public static final String DEFAULT_CONDITIONS_KEY = "forge:conditions";
+    public static final String DEFAULT_CONDITIONS_KEY = ResourceConditions.CONDITIONS_KEY;
     /**
-     * Key used to store the value associated with conditions,
+     * Key used to store the value associated with conditions
      * when the value is not represented as a map.
      * For example, if we wanted to store the value 2 with some conditions, we could do:
      *
@@ -46,7 +41,7 @@ public class ConditionalOps<T> extends RegistryOps<T> {
      * }
      * </pre>
      */
-    public static final String CONDITIONAL_VALUE_KEY = "forge:value";
+    public static final String CONDITIONAL_VALUE_KEY = "neoforge:value";
 
     /**
      * @see #createConditionalCodec(Codec, String)

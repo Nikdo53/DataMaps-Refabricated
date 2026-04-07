@@ -11,8 +11,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.Connection;
 import net.minecraft.resources.ResourceKey;
-import net.nikdo53.tinymultiblocklib.Constants;
-import net.nikdo53.tinymultiblocklib.event.OnBlockPreviewEvent;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Consumer;

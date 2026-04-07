@@ -39,7 +39,7 @@ import java.util.function.Supplier;
 public record RegistryDataMapSyncPayload<T>(ResourceKey<? extends Registry<T>> registryKey, Map<ResourceLocation, Map<ResourceKey<T>, ?>> dataMaps) implements CustomPacketPayload {
 
 
-    public static final CustomPacketPayload.Type<RegistryDataMapSyncPayload<?>> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(DataMapsRefabricated.MOD_ID, "registry_data_map_sync"));
+    public static final CustomPacketPayload.Type<RegistryDataMapSyncPayload<?>> TYPE = new Type<>(DataMapsRefabricated.loc( "registry_data_map_sync"));
     public static final StreamCodec<RegistryFriendlyByteBuf, RegistryDataMapSyncPayload<?>> STREAM_CODEC = StreamCodec.ofMember(RegistryDataMapSyncPayload::write, RegistryDataMapSyncPayload::decode);
 
 

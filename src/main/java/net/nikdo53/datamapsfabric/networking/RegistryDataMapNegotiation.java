@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 
 @ApiStatus.Internal
 public record RegistryDataMapNegotiation(ServerConfigurationPacketListener listener) implements ConfigurationTask {
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(DataMapsRefabricated.MOD_ID, "registry_data_map_negotiation");
+    public static final ResourceLocation ID = DataMapsRefabricated.loc( "registry_data_map_negotiation");
     public static final ConfigurationTask.Type TYPE = new ConfigurationTask.Type(ID.toString());
 
     @Override

@@ -6,12 +6,10 @@
 package net.nikdo53.datamapsfabric.datamaps;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonParser;
 import com.mojang.datafixers.util.Either;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
@@ -26,7 +24,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.nikdo53.datamapsfabric.condition.ConditionalOps;
-import net.nikdo53.datamapsfabric.extensions.IRegistryDataMapExtension;
+import net.nikdo53.datamapsfabric.extensions.IConditionOpsExtension;
 import org.slf4j.Logger;
 
 import java.io.Reader;
@@ -136,7 +134,10 @@ public class DataMapLoader implements PreparableReloadListener {
     }
 
     private static Map<ResourceKey<? extends Registry<?>>, LoadResult<?>> load(ResourceManager manager, ProfilerFiller profiler, RegistryAccess access) {
-        final ConditionalOps<JsonElement> ops = new ConditionalOps<>(RegistryOps.create(JsonOps.INSTANCE, access), access);
+        final RegistryOps ops = RegistryOps.create(JsonOps.INSTANCE, access);
+        if (ops instanceof IConditionOpsExtension ext) {
+            ext.setProvider(access);
+        }
 
         final Map<ResourceKey<? extends Registry<?>>, LoadResult<?>> values = new HashMap<>();
         access.registries().forEach(registryEntry -> {
