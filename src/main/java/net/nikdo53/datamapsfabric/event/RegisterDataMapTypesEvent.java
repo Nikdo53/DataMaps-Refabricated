@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-only
  */
 
-package net.nikdo53.datamapsfabric.datamaps;
+package net.nikdo53.datamapsfabric.event;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
@@ -12,6 +12,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.nikdo53.datamapsfabric.datamaps.DataMapType;
+import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashMap;
@@ -46,17 +48,7 @@ public class RegisterDataMapTypesEvent  {
      * @throws UnsupportedOperationException if the registry is a non-synced datapack registry and the data map is synced
      */
     public <T, R> void register(DataMapType<R, T> type) {
-        final var registry = type.registryKey();
-        if (DynamicRegistriesImpl.DYNAMIC_REGISTRY_KEYS.stream().anyMatch(resourceKey -> resourceKey.equals(registry)) &&
-                RegistryDataLoader.SYNCHRONIZED_REGISTRIES.stream().noneMatch(data -> data.key().equals(registry))) {
-            throw new UnsupportedOperationException("Cannot register synced data map " + type.id() + " for datapack registry " + registry.location() + " that is not synced!");
-        }
-
-        final var map = attachments.computeIfAbsent((ResourceKey) registry, k -> new HashMap<>());
-        if (map.containsKey(type.id())) {
-            throw new IllegalArgumentException("Tried to register data map type with ID " + type.id() + " to registry " + registry.location() + " twice");
-        }
-        map.put(type.id(), type);
+        DataMapsManager.register(type);
     }
 
     @FunctionalInterface

@@ -37,6 +37,12 @@ public class TestDataGen implements DataGeneratorEntrypoint{
             map.add(Items.WOODEN_SWORD.builtInRegistryHolder(), "NO triple t 😡", false, ResourceConditions.not(ResourceConditions.anyModsLoaded("optifine", "some_other_mod")));
 
 
+            var map2 = this.builder(TestDataMaps.ADADAD1);
+            map2.add(ItemTags.IRON_ORES, "irroron", false);
+
+            var map3 = this.builder(TestDataMaps.ADADAD2);
+            map3.add(ItemTags.DIRT, "dirtt", false);
+
         }
     }
 

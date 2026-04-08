@@ -10,6 +10,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.nikdo53.datamapsfabric.event.RegisterDataMapTypesEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;

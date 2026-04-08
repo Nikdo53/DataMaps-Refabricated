@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
 import net.nikdo53.datamapsfabric.event.FabricEvents;
 import net.nikdo53.datamapsfabric.networking.NetworkingRegistry;
+import net.nikdo53.datamapsfabric.test.TestDataMaps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,7 @@ public class DataMapsRefabricated implements ModInitializer {
 		NetworkingRegistry.init();
 		FabricEvents.register();
 		DataMapsManager.initDataMaps();
+		TestDataMaps.init();
 	}
 
 	public static ResourceLocation loc(String path) {

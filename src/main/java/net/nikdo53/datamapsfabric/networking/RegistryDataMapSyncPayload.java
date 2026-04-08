@@ -23,7 +23,7 @@ import net.minecraft.util.GsonHelper;
 import net.nikdo53.datamapsfabric.DataMapsRefabricated;
 import net.nikdo53.datamapsfabric.datamaps.DataMapType;
 import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
-import net.nikdo53.datamapsfabric.datamaps.DataMapsUpdatedEvent;
+import net.nikdo53.datamapsfabric.event.DataMapsUpdatedEvent;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @ApiStatus.Internal
 @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -23,7 +23,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.nikdo53.datamapsfabric.condition.ConditionalOps;
+import net.nikdo53.datamapsfabric.event.DataMapsUpdatedEvent;
 import net.nikdo53.datamapsfabric.extensions.IConditionOpsExtension;
 import org.slf4j.Logger;
 

@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.mixin.networking.accessor.ServerCommonNetworkHandlerAccessor;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -16,11 +17,12 @@ import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.nikdo53.datamapsfabric.datamaps.DataMapType;
 import net.nikdo53.datamapsfabric.datamaps.DataMapsManager;
-import net.nikdo53.datamapsfabric.datamaps.RegisterDataMapTypesEvent;
 import net.nikdo53.datamapsfabric.networking.RegistryDataMapNegotiation;
 import net.nikdo53.datamapsfabric.networking.RegistryDataMapSyncPayload;
 import net.nikdo53.datamapsfabric.test.TestDataMaps;
@@ -33,7 +35,7 @@ import java.util.Map;
 public class FabricEvents {
     public static void register(){
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(FabricEvents::onDatapackSync);
-       // UseBlockCallback.EVENT.register(FabricEvents::testOnUseBlock);
+        UseBlockCallback.EVENT.register(FabricEvents::testOnUseBlock);
         RegisterDataMapTypesEvent.EVENT.register(FabricEvents::onRegisterDataMapTypes);
 
         ServerConfigurationConnectionEvents.CONFIGURE.register(FabricEvents::onRegisterConfigurationTasks);
@@ -53,6 +55,9 @@ public class FabricEvents {
     }
 
     private static InteractionResult testOnUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+
+        System.out.println(level.isClientSide + " client -----" + BuiltInRegistries.ITEM.getDataMaps().keySet().stream().map(DataMapType::id).toList());
+
         ItemStack stack = player.getItemInHand(interactionHand);
         System.out.println(stack.getItemHolder().getData(TestDataMaps.TEST_DATA_MAP));
 
