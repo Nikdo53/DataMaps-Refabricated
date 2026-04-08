@@ -15,9 +15,4 @@ public class TestDataMaps {
     }
 
     public static final DataMapType<Item, String> TEST_DATA_MAP = DataMapType.builder(DataMapsRefabricated.loc("test"), Registries.ITEM, Codec.STRING).build();
-
-    public static final DataMapType<Item, String> ADADAD1 = DataMapsManager.register(DataMapType.builder(DataMapsRefabricated.loc("adada1"), Registries.ITEM, Codec.STRING).build());
-    public static final DataMapType<Item, String> ADADAD2 = DataMapsManager.register(DataMapType.builder(DataMapsRefabricated.loc("adada2"), Registries.ITEM, Codec.STRING).build());
-    public static final DataMapType<Item, String> ADADAD3 = DataMapsManager.register(DataMapType.builder(DataMapsRefabricated.loc("adada3"), Registries.ITEM, Codec.STRING).build());
-
 }

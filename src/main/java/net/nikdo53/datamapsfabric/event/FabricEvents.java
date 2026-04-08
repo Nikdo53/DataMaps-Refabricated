@@ -35,7 +35,7 @@ import java.util.Map;
 public class FabricEvents {
     public static void register(){
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(FabricEvents::onDatapackSync);
-        UseBlockCallback.EVENT.register(FabricEvents::testOnUseBlock);
+     //   UseBlockCallback.EVENT.register(FabricEvents::testOnUseBlock);
         RegisterDataMapTypesEvent.EVENT.register(FabricEvents::onRegisterDataMapTypes);
 
         ServerConfigurationConnectionEvents.CONFIGURE.register(FabricEvents::onRegisterConfigurationTasks);
@@ -55,11 +55,6 @@ public class FabricEvents {
     }
 
     private static InteractionResult testOnUseBlock(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-
-        System.out.println(level.isClientSide + " client -----" + BuiltInRegistries.ITEM.getDataMaps().keySet().stream().map(DataMapType::id).toList());
-
-        ItemStack stack = player.getItemInHand(interactionHand);
-        System.out.println(stack.getItemHolder().getData(TestDataMaps.TEST_DATA_MAP));
 
         return InteractionResult.PASS;
     }

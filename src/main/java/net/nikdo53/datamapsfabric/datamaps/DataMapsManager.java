@@ -63,7 +63,6 @@ public class DataMapsManager {
         }
         map.put(type.id(), type);
 
-        System.out.println("registed dataMaps = " + dataMaps);
         return type;
     }
 }

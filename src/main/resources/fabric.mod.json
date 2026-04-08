@@ -19,6 +19,9 @@
 		],
 		"fabric-datagen": [
 			"net.nikdo53.datamapsfabric.test.TestDataGen"
+		],
+		"client": [
+			"net.nikdo53.datamapsfabric.DataMapsRefabricatedClient"
 		]
 	},
 	"mixins": [
