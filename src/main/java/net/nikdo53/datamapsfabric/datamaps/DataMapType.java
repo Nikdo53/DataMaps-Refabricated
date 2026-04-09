@@ -7,10 +7,12 @@ package net.nikdo53.datamapsfabric.datamaps;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.nikdo53.datamapsfabric.event.RegisterDataMapTypesEvent;
+import net.nikdo53.datamapsfabric.extensions.IDataMapHolderExtension;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -52,7 +54,7 @@ import java.util.Objects;
  *
  * <p>
  * You can access a data map using registries and holders. <br>
- * You can usually go through {@linkplain net.minecraft.core.Holder#getData(DataMapType)} Holder} implementations in order to get the data of an object directly.
+ * You can usually go through {@linkplain Holder#getData(DataMapType)} Holder} implementations in order to get the data of an object directly.
  *
  * @see AdvancedDataMapType for more functionality
  */
@@ -71,6 +73,13 @@ public sealed class DataMapType<R, T> permits AdvancedDataMapType {
         this.codec = Objects.requireNonNull(codec, "codec must not be null");
         this.networkCodec = networkCodec;
         this.mandatorySync = mandatorySync;
+    }
+
+    /**
+     * In case Interface injections dont work
+     */
+    public @Nullable T getFrom(Holder<R> holder){
+        return ((IDataMapHolderExtension<R>) holder).getData(this);
     }
 
     /**
